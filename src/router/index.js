@@ -10,14 +10,9 @@ const routes = [
     component: () => import('../views/Search.vue')
   },
   {
-    path: '/music',
-    name: 'music',
-    component: () => import('../views/Music.vue')
-  },
-  {
-    path: '/movie',
-    name: 'movie',
-    component: () => import('../views/Movie.vue')
+    path: '/result',
+    name: 'result',
+    component: () => import('../views/Result.vue')
   }
 ]
 

@@ -19,10 +19,12 @@
                 <v-col cols="12" xs="12" sm="8" md="8" lg="6" xl="4">
                     <v-text-field
                     label="Movie!"
+                    v-model="keyword"
                     prepend-inner-icon="search"
                     append-icon="keyboard"
                     outlined
                     rounded
+                    @keydown.enter="search()"
                     >
                     </v-text-field>
                 </v-col>
@@ -38,8 +40,21 @@
 <script>
 export default {
   name: 'search',
-  components: {
-    
+  data () {
+      return {
+          keyword: ""
+      }
+  },
+  methods: {
+      search () {
+          this.$router.push({
+              name: 'result',
+              query: {
+                  keyword: this.keyword
+              },
+              props: true
+          })
+      }
   }
 }
 </script>

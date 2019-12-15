@@ -4,19 +4,21 @@
         <v-layout row wrap align-center>
           <v-flex>
             <v-row>
-                <v-col cols="12" sm="4">
-                </v-col>
-                <v-col cols="12" sm="4">
-                    Test
-                </v-col>
-                <v-col cols="12" sm="4">
-                </v-col>
+                <v-flex xs12>
+                    <v-img
+                    :src="require('../assets/festisite_google.png')"
+                    class="my-3"
+                    contain
+                    height="110"
+                    ></v-img>
+                </v-flex>
             </v-row>
             <v-row>
-                <v-col cols="12" sm="4">
+                <v-col cols="12" xs="0" sm="2" md="2" lg="3" xl="4">
                 </v-col>
-                <v-col cols="12" sm="4">
+                <v-col cols="12" xs="12" sm="8" md="8" lg="6" xl="4">
                     <v-text-field
+                    label="Movie!"
                     prepend-inner-icon="search"
                     append-icon="keyboard"
                     outlined
@@ -24,7 +26,7 @@
                     >
                     </v-text-field>
                 </v-col>
-                <v-col cols="12" sm="4">
+                <v-col cols="12" xs="0" sm="2" md="2" lg="3" xl="4">
                 </v-col>
             </v-row>
           </v-flex>

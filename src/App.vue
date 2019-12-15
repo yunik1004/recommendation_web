@@ -5,10 +5,11 @@
       color="black"
       dark
     >
-      <v-btn icon>
-        <v-icon>mdi-play-circle-outline</v-icon>
-      </v-btn>
-      <v-toolbar-title>Team4</v-toolbar-title>
+      <v-toolbar-title>
+        <router-link :to="{name: 'home'}">
+          <v-btn icon><v-icon>mdi-play-circle-outline</v-icon></v-btn>More About You
+        </router-link>
+      </v-toolbar-title>
     </v-app-bar>
     
     <router-view/>
@@ -34,6 +35,16 @@
     &.router-link-exact-active {
       color: #42b983;
     }
+  }
+}
+
+a { 
+  text-decoration: none;
+  &:link {
+    color: white;
+  }
+  &:visited {
+    color: white;
   }
 }
 </style>

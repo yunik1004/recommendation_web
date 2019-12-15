@@ -5,16 +5,66 @@
       color="black"
       dark
     >
-      <v-toolbar-title>
+      <v-toolbar-title id="homebutton">
         <router-link :to="{name: 'home'}">
-          <v-btn icon><v-icon>mdi-play-circle-outline</v-icon></v-btn>More About You
+          <v-btn icon><v-icon>emoji_objects</v-icon></v-btn>More About You
         </router-link>
       </v-toolbar-title>
+      <v-text-field
+        v-if="qboxVisible"
+        v-model="keyword"
+        flat
+        rounded
+        hide-details
+        solo-inverted
+        label="Movie!"
+        append-icon="mdi-magnify"
+        class="hidden-sm-and-down"
+        id="qbox"
+        @keydown.enter="search()"
+      >
+      </v-text-field>
+      <v-spacer/>
     </v-app-bar>
     
-    <router-view/>
+    <router-view :key="$route.fullPath"/>
   </div>
 </template>
+
+<script>
+export default {
+  name: 'app',
+  data () {
+    return {
+      keyword: this.$store.getters.getKeyword
+    }
+  },
+  computed: {
+    qboxVisible: function () {
+      return this.$store.getters.getqboxVisible
+    }
+  },
+  watch: {
+    qboxVisible: {
+      deep: true,
+      handler: function () {
+        this.keyword = this.$store.getters.getKeyword
+      }
+    }
+  },
+  methods: {
+      search () {
+          this.$router.push({
+              name: 'result',
+              query: {
+                  keyword: this.keyword.toLowerCase()
+              },
+              props: true
+          })
+      }
+  }
+}
+</script>
 
 <style lang="scss">
 #app {
@@ -46,5 +96,9 @@ a {
   &:visited {
     color: white;
   }
+}
+
+#homebutton {
+  margin-right: 30px
 }
 </style>

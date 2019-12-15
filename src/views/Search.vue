@@ -50,11 +50,14 @@ export default {
           this.$router.push({
               name: 'result',
               query: {
-                  keyword: this.keyword
+                  keyword: this.keyword.toLowerCase()
               },
               props: true
           })
       }
+  },
+  created () {
+      this.$store.commit('invisible')
   }
 }
 </script>

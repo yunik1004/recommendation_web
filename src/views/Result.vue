@@ -11,7 +11,7 @@
               <v-list-item
                 v-for="item in movies"
                 :key="item">
-                <v-list-item-content>
+                <v-list-item-content style="text-align:left;">
                   <v-list-item-title v-text="item"></v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
@@ -27,7 +27,7 @@
                 v-for="(item, index) in musics"
                 :key="item.title">
                 <v-list-item-icon>
-                  <v-img src='https://i.ytimg.com/vi/yBG7chMLSXk/hqdefault.jpg'
+                  <v-img :src="require('../assets/default-cover.png')"
                       width=140 height=120 contain></v-img>
                 </v-list-item-icon>
                 <v-list-item-content style="text-align:left;">
@@ -53,31 +53,48 @@
 </template>
 
 <script>
+const axios = require('axios');
+
 export default {
   name: 'result',
   data () {
     return {
       keyword: this.$route.query.keyword.toLowerCase(),
       movies: [],
-      musics: []
+      musics: [],
+      musics_cover_url: [],
     }
   },
   created () {
     this.$store.commit('setKeyword', this.keyword)
     this.$store.commit('visible')
 
-    const axios = require('axios');
-    axios.get('http://twice.dmlab.kaist.ac.kr:32787/api/?keyword=' + this.keyword)
-        .then(function (response) {
-          this.movies = response['found']
-          this.musics = response['result']
+    let that = this;
+
+    axios.get('http://twice.dmlab.kaist.ac.kr:32787/api/', {
+      params: {
+        keyword: this.keyword
+      }
+    }).then(function (response) {
+          that.movies = response.data['found']
+          that.musics = response.data['result']
+          /*
+          that.musics.forEach(function (item) {
+            that.getURL(item.title)
+          });*/
         }).catch(function (error) {
           alert(error);
         })
-
-    // To be removed
-    this.movies = ['111', '222', '333']
-    this.musics = [{'title': 'Loren Ipsum', 'lower_title': '1111', 'categories': ['', '111', '222']}, {'title': 'Loren Ipsum2', 'lower_title': '2222', 'categories': ['', '111', '222']}, {'title': 'Loren Ipsum3', 'lower_title': '3333', 'categories': ['', '111', '222']}]
+  },
+  methods: {
+    getURL (title) {
+      let that = this;
+      axios.get('https://musicbrainz.org/ws/2/release/?query=' + title)
+        .then(function (response) {
+          let mid = response['data']['releases'][0]['id']
+          that.musics_cover_url.push('http://coverartarchive.org/release/' + mid + '/front');
+      })
+    }
   }
 }
 </script>
